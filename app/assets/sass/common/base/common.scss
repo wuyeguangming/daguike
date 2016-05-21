@@ -1,0 +1,77 @@
+// for ui.bootstrap
+.nav, .pagination, .carousel, .panel-title a { 
+    cursor: pointer; 
+}
+
+// @import 'bootstrap/3.2.0/less/variables.less';
+// @import "bootstrap/3.2.0/less/bootstrap.less";
+// @border-radius-base:  0;
+// @border-radius-large: 0;
+// @border-radius-small: 0;
+
+// bootstrap修改如下
+// \less\variables.less
+// @import "HubSpot-messenger/build/css/messenger.less"; // 注意css重命名less！！！
+// @import "HubSpot-messenger/build/css/messenger-theme-future.less"; // 注意css重命名less，且去除首行@import url。。会导致奔溃
+// @import "HubSpot-messenger/build/css/messenger-theme-air.less";
+// @import "HubSpot-messenger/build/css/messenger-theme-block.less";
+// @import "HubSpot-messenger/build/css/messenger-theme-flat.less";
+// @import "HubSpot-messenger/build/css/messenger-theme-ice.less";
+// @import "ng-grid/ng-grid.min.less";
+// @import "themify-icons/themify-icons.less"; //修改了url
+// @import "gridster/dist/jquery.gridster.min.less"; //修改了url
+
+
+// 修改部分
+
+// 去除边界
+:focus {
+    outline: 0px auto -webkit-focus-ring-color;
+}
+// hover颜色
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+    color: #333333;
+    text-decoration: none;
+    background-color: #ebebeb;
+}
+
+
+// 修改自 nsPopover
+.ns-popover-list-theme {
+    margin-top: 8px;
+    // padding-top: 10px;
+    // box-sizing: border-box;
+    // border: solid 1px #d2d2d2;
+    border-radius: 0;
+    z-index: 99999;
+    background-color: #000;
+    box-shadow: #646464 0 0 5px; 
+    a {
+        color: #fff;
+    }
+}
+
+// 
+.full_width{
+    width: 100%;
+}
+
+
+html {
+    overflow-y: scroll;
+}
+body {
+    background: #f3f3f3;
+    color: #333333 !important;
+    .form-control {
+      border-radius: 0;
+    }
+}
+
+.alert {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  margin-bottom: 10px !important;
+  border-radius: 0px !important;
+  border: 0px !important;
+}

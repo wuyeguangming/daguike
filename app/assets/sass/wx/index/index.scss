@@ -1,0 +1,20 @@
+.buy{
+    .buy_count{
+        padding: 6px 12px;
+    }
+    .list-group-item, a.list-group-item {
+        border-bottom: 0;
+    }
+}
+
+.goods{
+    .skus{
+        margin: 5px 5px 10px 0px !important;
+    }
+    .skus.active, .skus.active:focus {
+        color: #be0106!important;
+        background-color: #fff!important;
+        border: 2px solid #be0106!important;
+    }
+
+}

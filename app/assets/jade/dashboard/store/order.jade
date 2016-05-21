@@ -1,0 +1,116 @@
+.dashboard.order
+    sidebar(user='data.user' href-base='/dashboard/store')
+    #content-wrapper
+        br
+        .col-md-10
+            .row
+                .col-md-3
+                    .input-group
+                        span.input-group-addon 订单号
+                        input.form-control(type="text" ng-model="search_sn")
+                .col-md-3
+                    .input-group
+                        span.input-group-addon 用户名
+                        input.form-control(type="text" ng-model="search_username")
+                .col-md-3
+                    .input-group
+                        span.input-group-addon 手机号
+                        input.form-control(type="text" ng-model="search_phone")
+                .col-md-3
+                    .input-group
+                        span.input-group-addon 商品名
+                        input.form-control(type="text" ng-model="search_goodsname")
+        .col-md-2
+            .btn.btn-success.btn-block(ng-click="search()") 搜索
+        .col-md-12(ng-grid="grid_options")
+            br
+            .btn-group
+                .btn.btn-default(ng-model="status" btn-radio="''" uncheckable ng-change="update('')") 所有订单
+                .btn.btn-default(ng-model="status" btn-radio="0" uncheckable ng-change="update(0)") 已取消
+                .btn.btn-default(ng-model="status" btn-radio="1" uncheckable ng-change="update(1)") 等待支付
+                //- .btn.btn-default(ng-click="update(4)") 已发货
+                .btn.btn-default(ng-model="status" btn-radio="5" uncheckable ng-change="update(5)") 交易成功
+                .btn.btn-default(ng-model="status" btn-radio="6" uncheckable ng-change="update(6)") 申请退款中
+                .btn.btn-default(ng-model="status" btn-radio="7" uncheckable ng-change="update(7)") 退款成功
+                .btn.btn-default(ng-model="status" btn-radio="8" uncheckable ng-change="update(8)") 退款失败
+                .btn.btn-default(ng-model="status" btn-radio="9" uncheckable ng-change="update(9)") 无人收货
+                //- .btn.btn-default(ng-click="print()") 打印本页订单
+            .btn-group.pull-right
+                //- .btn.btn-default 历史订单
+                .btn.btn-default(ng-model="status" btn-radio="2" uncheckable ng-change="update(2)") 下单成功
+                .btn.btn-default(ng-model="status" btn-radio="3" uncheckable ng-change="update(3)") 发货中
+                .btn.btn-default(ng-model="status" btn-radio="'delay2'" uncheckable ng-change="update('delay2')") 预约未发
+                .btn.btn-default(ng-model="status" btn-radio="'delay3'" uncheckable ng-change="update('delay3')") 预约已发
+            table.table(ng-show="data.page.total")
+                thead
+                    tr
+                        th.col-md-3 宝贝
+                        th.col-md-1 单价
+                        th.col-md-1 数量
+                        th.col-md-1 实收
+                        th.col-md-1 状态
+                        th.col-md-2 操作
+                tbody(ng-repeat="order in data.page.data")
+                    tr
+                        td {{order|orderTime}}{{','}}{{order.sn+','}}{{order.goods_amount+','}}{{order.discount+','}}{{order.amount+','}}{{order|orderAddress}}{{','}}{{order.address.name+','+order.address.phone+','+order.pay_type+','+order.buyer_id}}
+                            span.btn.btn-danger.btn-xs(ng-if="order.status>=1 && order.status<=3" ng-click="cancel(order)") 取消
+                        td
+                        td
+                        td 
+                            strong.text-danger {{order.amount|currency:"￥"}}
+                        td {{order|orderStatus}}
+                        td
+                            .btn-group
+                                .btn.btn-default.btn-md(ng-click="print(order)") 打印订单
+                                .btn.btn-default.btn-md(ng-if="order.status==2" ng-click="post(order,3)") 确认发货
+                                .btn.btn-default.btn-md(ng-if="order.status>1 && order.status<5" ng-click="complete(order,3)") 已完成
+                                //- .btn.btn-danger.btn-md(ng-if="order.status>=1 && order.status<=3" ng-click="cancel(order)") 取消订单
+                    tr(ng-repeat="order_goods in order.order_goods")
+                        td.media
+                            .pull-left
+                                a(ng-href="{{'/dashboard/store/publish/'+order_goods.goods_id}}")
+                                    img.media-object(ng-src="{{U.img(order_goods.goods_image,'sm')}}")
+                            .media-body
+                                p.media-heading {{order_goods.goods_name}}
+                                .text-muted {{order_goods.sku_value}}
+                        td
+                            p {{order_goods.sku_price|currency:"￥"}}
+                        td
+                            p {{order_goods.num}}
+                        td
+                            p {{order_goods.sku_price*order_goods.num|currency:"￥"}}
+                        //- td
+                        //-     .btn-group
+                        //-         a.btn.btn-default(ng-click="print()") 打印订单
+                                //- a.btn.btn-default.glyphicon.glyphicon-edit(ng-href="{{'/dashboard/store/publish/'+order_goods.id}}")
+                                //- a.btn.btn-danger.glyphicon.glyphicon-remove(ng-click="del(order_goods)")
+            pagination.pagination-sm(max-size="20" ng-change="search(data.page.current_page, status)" ng-if="data.page.total" ng-show="data.page.total > data.page.per_page" total-items="data.page.total" ng-model="data.page.current_page" items-per-page="data.page.per_page"  previous-text="上一页" next-text="下一页" first-text="<" last-text=">")
+            
+            //- .btn-group
+            //-     ul.pagination-sm.pagination
+            //-         li
+            //-             a(ng-click="page(-1)")  上一页
+            //-     pagination.pagination-sm(ng-change="Update('/dashboard/store/order-page/'+data.page.current_page).search('status', status)" ng-if="data.page.total" ng-show="data.page.total > data.page.per_page" total-items="data.page.total" ng-model="data.page.current_page" items-per-page="data.page.per_page")
+            //-     ul.pagination-sm.pagination
+            //-         li
+            //-             a(ng-click="page(1)")  下一页
+
+
+            h2(ng-show="data.page.total==0") 暂无订单！
+
+            .hidden 
+                #print
+                    div(id="{{order.sn}}" ng-repeat="order in data.page.data")
+                        .order_goods(ng-repeat="order_goods in order.order_goods")
+                            .pull-left(ng-if="!order.pay_type")
+                                .qrcode(data-id="{{order.id}}") 
+                            .pull-left
+                                div(style="font-weight: bold;font-size: 16px;") &nbsp{{order|orderPay}}
+                                div(style="font-weight: bold;font-size: 16px;") &nbsp&nbsp{{order|orderTime}}
+                                div(style="font-weight: bold;font-size: 16px;") &nbsp{{order.sn}}&nbsp&nbsp{{$index+1}}/{{order.order_goods.length}}
+                                div(style="font-weight: bold;font-size: 16px;") &nbsp{{order_goods.num*order_goods.sku_price|currency:"￥"}}/{{order_goods.sku_serial}}×{{order_goods.num}}
+                            .pull-left(ng-if="order.pay_type")
+                                .qrcode(data-id="{{order.id}}") 
+                            nobr(style="font-weight: bold;font-size: 16px;") &nbsp{{order|orderAddress}}
+                            br
+                            nobr(style="font-weight: bold;font-size: 16px;") &nbsp{{order.address.name+order.address.phone+'__________________________________'}}

@@ -1,0 +1,14 @@
+.games.content
+    .hongbao(ng-if="_controller=='gamesHongbao'")
+        .text-center
+            h1.amount.text-danger(ng-show="hongbao.amount") {{hongbao.amount|currency:'￥'}}
+            div(ng-show="hongbao.amount") 还剩{{REFRESH_LIMIT-hongbao.refresh_cnt}}次
+            .condition(ng-show="hongbao.amount") 满{{hongbao.condition}}元使用
+            div(ng-show="hongbao.amount") 有效期{{hongbao.time_start.split(' ')[0]}}至{{hongbao.time_end.split(' ')[0]}}
+            .shua.btn.btn-danger(ng-click="shua()") {{info}}
+        p 刷红包攻略：
+        p 1:每天可刷{{REFRESH_LIMIT}}次；
+        p 2:每次金额随机；
+        p 3:红包仅当天有效；
+
+common-navbar(navbar="wx_navbar" ng-show="wx_navbar.ready")

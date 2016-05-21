@@ -1,0 +1,16 @@
+.common.option(ng-class="option.class")
+    legend(ng-if="option.title") {{option.title}}
+        .subtitle(ng-class="option.subtitle.class") {{option.subtitle.text}}
+        //- span.btn.btn-sm.pull-right(ng-if="option.span" ng-click="option.span.click()" ng-class="option.span.class") 全选
+    .list-group
+        .list-group-item(ng-repeat="item in option.list" ng-click="click(item,$index)" ng-class="class(item,$index)+option.item_class")
+            .btn.btn-lg {{filter(item)}}
+            .btn.subitem(ng-if="filter_subitem(item)") {{filter_subitem(item)}}
+    .full_width(ng-show="option.list.length")
+        .btn-group.full_width(ng-show="option.show_confirm")
+            .btn.btn-default.btn-lg.col-xs-6(ng-click="option.backward()") 返回
+            button.btn.btn-success.btn-lg.col-xs-6(ng-disabled="option.invalid()" ng-click="option.post()") 确定
+        .btn-group.full_width(ng-show="option.show_ok")
+            button.btn.btn-success.btn-lg.btn-block(ng-disabled="option.invalid()" ng-click="option.post()") 确定
+        .btn-group.full_width(ng-show="option.show_backward")
+            .btn.btn-default.btn-lg.btn-block(ng-click="option.backward()") 返回

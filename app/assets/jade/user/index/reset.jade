@@ -1,0 +1,32 @@
+.index
+    .reset
+        div(ng-show='!reset.is_sent')
+            h1 重置密码
+            .container
+                .col-md-12
+                    form.form-horizontal.user-container(name='reset_form' novalidate  ng-submit="reset.submit()" role="form")
+                        .form-group.icon-container(ng-class="{ 'has-error' : (invalid_password() || reset_form.password.$invalid) && !reset_form.password.$pristine }")
+                            p.col-sm-3.control-label 密码
+                            .col-sm-9
+                                .fa.fa-lock
+                                input.form-control(required placeholder="{{PASSWORD_MIN}}~{{PASSWORD_MAX}}位字母或数字且不能全为数字或字母" type="password" name="password" ng-model="reset.password" ng-minlength="PASSWORD_MIN" ng-maxlength="PASSWORD_MAX")
+                                .help-block(ng-show="(invalid_password() || reset_form.password.$invalid) && !reset_form.password.$pristine") {{PASSWORD_MIN}}~{{PASSWORD_MAX}}位字母或数字且不能全为数字或字母
+                        .form-group.icon-container(ng-class="{ 'has-error' : (reset.password != reset.password_confirmation) && !reset_form.password_confirmation.$pristine }")
+                            p.col-sm-3.control-label 确认密码
+                            .col-sm-9
+                                .fa.fa-lock
+                                input.form-control(required placeholder="确认密码" type="password" name="password_confirmation" ng-model="reset.password_confirmation" ng-minlength="PASSWORD_MIN" ng-maxlength="PASSWORD_MAX")
+                                .help-block(ng-show="(reset.password != reset.password_confirmation) && !reset_form.password_confirmation.$pristine") 两次密码不同
+
+                        .form-actions.form-group.icon-container.has-error
+                            .col-sm-3
+                            .col-sm-9
+                                button.btn.btn-danger.full_width(type='submit' ng-disabled='invalid_password() || reset_form.password.$invalid || reset_form.password_confirmation.$invalid || (reset.password != reset.password_confirmation)' ng-init="reset.btn_info='重置密码'") {{reset.btn_info}}
+                                .help-block(ng-show="reset.submit_errors" ng-repeat="error in reset.submit_errors") {{error}}
+                                br
+
+        div(ng-show='reset.is_sent') 
+            center
+                h2 密码已重置！
+                br
+                a.btn.btn-danger(ng-href="/user/login") 立即登录

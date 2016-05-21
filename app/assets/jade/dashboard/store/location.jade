@@ -1,0 +1,30 @@
+.dashboard.location
+    sidebar(user='data.user' href-base='/dashboard/store')
+    #content-wrapper
+        br
+        .col-md-12
+            form.form-horizontal(name='publish_form' novalidate role="form")
+                fieldset.form-inner
+                    .form-group
+                        .col-md-1.control-label 社区
+                        .col-md-7
+                            alert.col-md-3(type="success" ng-repeat="loc_community in loc_communitys" close="remove(loc_community)") {{loc_community.name}}
+                            alert.col-md-12(type="danger" ng-show="sale_map_alert" close="sale_map_alert=''") {{sale_map_alert}}
+                            //- .btn-group
+                            //-     input.form-control(placeholder="请输入小区名称" type="text" ng-model="community_new")
+                            //-     .btn.btn-default 添加
+                        .col-md-12
+                            .row
+                                .col-md-6
+                                    input.form-control(type="text")
+                                .col-md-6
+                                    button.btn.btn-default.dropdown-toggle(type="button") 添加
+
+                    //- .form-group
+                    //-     .col-md-1.control-label 楼层
+                    //-     .col-md-2
+                    //-         select.form-control(ng-model="community" ng-options="loc_community.name for loc_community in loc_communitys")
+                    //-     .col-md-7
+                    //-         alert.col-md-3(type="success" ng-repeat="loc_community in loc_communitys" close="remove(loc_community)") {{loc_community.name}}
+                    //-         alert.col-md-12(type="danger" ng-show="sale_map_alert" close="sale_map_alert=''") {{sale_map_alert}}
+                    //-         input.form-control(placeholder="请输入省、市、地区或小区名称（默认为空则全网销售）" typeahead-on-select="sale_map_sel($item)" type="text" ng-model="selected.sale_map_item" typeahead="item for item in sale_map | filter:$viewValue | limitTo:8")

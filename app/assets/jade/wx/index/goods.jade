@@ -1,0 +1,20 @@
+.goods.content_no_top
+    .img_top(ng-show="wx_navbar.ready")
+        img.full_width(ng-src="{{U.img(wx_cart.item.goods.image)}}")
+        //- .full_width(style="background-image:url({{U.img(wx_cart.item.goods.image}})")
+    .container-fluid(ng-show="wx_navbar.ready")
+        .row
+            .col-xs-12
+                h3.text-danger.float_left {{wx_cart.item.price_show}}
+                    //- span.text-muted.sku_num(ng-if="wx_cart.item.sku_selected.num") {{' 库存:'+wx_cart.item.sku_selected.num}}
+                span.pull-right.text-muted {{wx_cart.countdown}}
+            .col-xs-12
+                h3 {{wx_cart.item.goods.name}}
+            .col-xs-12(ng-show="!wx_cart.sku_default(wx_cart.item.goods)")
+                .btn.btn-default.skus.btn-lg(ng-disabled="0==sku.num" ng-repeat="sku in wx_cart.item.goods.skus" ng-click="wx_cart.item.sku_selected=sku" ng-class="{'active': wx_cart.item.sku_selected.id==sku.id}" href='') {{sku.value}}
+        br
+
+        //- div(ng-repeat="item in wx_cart.item.goods.body.split(';')")
+            //- .thumbnail(ng-if="$index!=0")
+    //- img.full_width(ng-repeat="item in wx_cart.item.goods.body.split(';')" ng-if="$index!=0" ng-src="{{U.img(item)}}")
+common-navbar(navbar="wx_navbar" ng-show="wx_navbar.ready")

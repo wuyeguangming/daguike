@@ -1,0 +1,29 @@
+.dashboard.create
+    sidebar(user='data.user' href-base='/dashboard/store')
+    #content-wrapper
+        .col-md-12
+            br
+            form.form-horizontal(ng-if="!data.store.id" name='create_form' novalidate  ng-submit="create.submit()" role="form")
+                fieldset.form-inner
+                    .form-group(ng-class="{ 'has-error' : ( invalid_name() || create_form.name.$invalid) && !create_form.name.$pristine  }")
+                        .col-sm-1.control-label 店名
+                        .col-sm-6
+                            input.form-control(required placeholder="{{CREATE_MIN}}~{{CREATE_MAX}}位字符，不能全为数字" type="text" name="name" ng-model="create.name" ng-minlength="CREATE_MIN" ng-maxlength="CREATE_MAX")
+                            .help-block(ng-show="( invalid_name() || create_form.name.$invalid) && !create_form.name.$pristine") {{CREATE_MIN}}~{{CREATE_MAX}}位字符，不能全为数字
+                    //- .form-group(ng-class="{ 'has-error' : (invalid_create(create.create_new) || (create.name == create.create_new) || create_form.create_new.$invalid) && !create_form.create_new.$pristine }")
+                    //-   .col-sm-1.control-label 分类
+                    //-   .col-sm-6
+                    //-     input.form-control(required placeholder="{{CREATE_MIN}}~{{CREATE_MAX}}位字母或数字且不能全为数字或字母，且不能与原密码相同" type="create" name="create_new" ng-model="create.create_new" ng-minlength="CREATE_MIN" ng-maxlength="CREATE_MAX")
+                    //-     .help-block(ng-show="(invalid_create(create.create_new) || create_form.create_new.$invalid) && !create_form.create_new.$pristine") {{CREATE_MIN}}~{{CREATE_MAX}}位字母或数字且不能全为数字或字母
+                    //-     .help-block(ng-show="create.name == create.create_new && !create_form.create_new.$pristine") 新密码不能与原密码相同
+                    //- .form-group(ng-class="{ 'has-error' : (create.create_new != create.create_confirmation) && !create_form.create_confirmation.$pristine }")
+                    //-   .col-sm-1.control-label 所在地
+                    //-   .col-sm-6
+                    //-     common-location(loc='loc')
+                
+                    .form-actions.form-group(ng-class="{'has-success':!!create.submit_success, 'has-error':!!create.submit_error}")
+                        .col-sm-1
+                        .col-sm-6
+                            button.btn.btn-danger.full_width(type='submit' ng-disabled='( invalid_name() || create_form.name.$invalid)' ng-init="create.btn_info='创建店铺'") {{create.btn_info}}
+                            .help-block.has-success(ng-show="create.submit_success") {{create.submit_success}}
+                            .help-block.has-error(ng-show="create.submit_error") {{create.submit_error}}

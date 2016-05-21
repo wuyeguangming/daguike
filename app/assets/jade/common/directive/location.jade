@@ -1,0 +1,24 @@
+.common_location.width_100
+  div(ng-show="mode=='default'")
+    button.col-md-2.btn.btn-default.dropdown-toggle(type="button",ng-disabled="disabled",dropdown='' ng-class="{'sm':'btn-sm'}[size]") {{province_name}}
+      span.caret
+      ul.dropdown-menu(role="menu")
+        li(ng-repeat="_province in provinces")
+          a(href='',ng-click="sel(1, _province)") {{_province.name}}
+    button.col-md-2.btn.btn-default.dropdown-toggle(type="button",ng-disabled="disabled",dropdown='' ng-class="{'sm':'btn-sm'}[size]") {{city_name}}
+      span.caret
+      ul.dropdown-menu(role="menu")
+        li(ng-repeat="_city in cities")
+          a(href='',ng-click="sel(2, _city)") {{_city.name}}
+    button.col-md-4.btn.btn-default.dropdown-toggle(type="button",ng-disabled="disabled",dropdown='' ng-class="{'sm':'btn-sm'}[size]") {{district_name}}
+      span.caret
+      ul.dropdown-menu(role="menu")
+        li(ng-repeat="_district in districts")
+          a(href='',ng-click="sel(3, _district)") {{_district.name}}
+    button.col-md-4.btn.btn-default.dropdown-toggle(type="button",ng-disabled="disabled",dropdown='' ng-class="{'sm':'btn-sm'}[size]") {{community_name}}
+      span.caret
+      ul.dropdown-menu(role="menu")
+        li(ng-repeat="_community in communities")
+          a(href='',ng-click="sel(4, _community)") {{_community.name}}
+
+  div(ng-show="mode=='text'") {{province_name}} / {{city_name}} / {{district_name}} / {{community_name}}

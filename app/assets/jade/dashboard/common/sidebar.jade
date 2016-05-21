@@ -1,0 +1,47 @@
+#sidebar-wrapper
+  ul.sidebar(ng-show='user')
+    li.sidebar-main
+      a(href="") 大贵客
+    li.sidebar-title(ng-init="store_show=true")
+      a(ng-click='store_show=!store_show' href='') 我的店铺
+        span(ng-class='{"glyphicon glyphicon-chevron-right": !store_show, "glyphicon glyphicon-chevron-down": store_show}')
+
+    //- store
+    li.sidebar-list(ng-show="store_show" ng-if='!user.store.id')
+      a(href='/dashboard/store/create' href-base="{{hrefBase}}" ng-class="{'active':_controller=='create'}")
+        | 立即创建
+    li.sidebar-list(ng-show="store_show" ng-if='user.store.id')
+      a(href='/dashboard/store/order-page' href-base="{{hrefBase}}" ng-class="{'active':_controller=='order'}")
+        | 订单管理
+    li.sidebar-list(ng-show="store_show" ng-if='user.store.id')
+      a(href='/dashboard/store/bill-page' href-base="{{hrefBase}}" ng-class="{'active':_controller=='bill'}")
+        | 账单管理
+    li.sidebar-list(ng-show="store_show" ng-if='user.store.id')
+      a(href='/dashboard/store/publish' href-base="{{hrefBase}}" ng-class="{'active':_controller=='publish'}")
+        | 发布商品
+    li.sidebar-list(ng-show="store_show" ng-if='user.store.id')
+      a(href='/dashboard/store/manage' href-base="{{hrefBase}}" ng-class="{'active':_controller=='manage'}")
+        | 管理商品
+    li.sidebar-list(ng-show="store_show" ng-if='user.store.id' )
+      a(href='/dashboard/store/album' href-base="{{hrefBase}}" ng-class="{'active':_controller=='album'}")
+        | 专辑管理
+    li.sidebar-list(ng-show="store_show" ng-if='user.store.id' )
+      a(href='/dashboard/store/refund-page' href-base="{{hrefBase}}" ng-class="{'active':_controller=='refund'}")
+        | 退款管理
+    //- li.sidebar-list(ng-show="store_show" ng-if='user.store.id' )
+    //-   a(href='/dashboard/store/location' href-base="{{hrefBase}}" ng-class="{'active':_controller=='location'}")
+    //-     | 地址管理
+
+    //- index
+    li.sidebar-title(ng-init="index_show=true")
+      a(ng-click='index_show=!index_show' href='') 我的账号
+        span(ng-class='{"glyphicon glyphicon-chevron-right": !index_show, "glyphicon glyphicon-chevron-down": index_show}')
+
+    li.sidebar-list(ng-show="index_show")
+      //- a(href='/dashboard/index/settings' href-base="{{hrefBase}}" ng-class="{'active':_controller=='settings'}")
+      //-   | 账户设置
+      a(href='/dashboard/index/password' href-base="{{hrefBase}}" ng-class="{'active':_controller=='password'}")
+        | 修改密码
+  .sidebar-footer
+    .col-xs-12
+      a(href="" ng-click="$root.Logout()") 退出

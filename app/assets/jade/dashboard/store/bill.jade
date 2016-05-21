@@ -1,0 +1,59 @@
+.dashboard.bill
+    sidebar(user='data.user' href-base='/dashboard/store')
+    #content-wrapper
+        br
+        .col-md-10
+            .row
+                .col-md-4
+                    .input-group
+                        span.input-group-addon 订单号
+                        input.form-control(type="text" ng-model="search_sn")
+                .col-md-4
+                    .input-group
+                        span.input-group-addon 姓名
+                        input.form-control(type="text" ng-model="search_username")
+                .col-md-4
+                    .input-group
+                        span.input-group-addon 手机号
+                        input.form-control(type="text" ng-model="search_phone")
+                //- .col-md-3
+                //-     .input-group
+                //-         span.input-group-addon 商品名
+                //-         input.form-control(type="text" ng-model="search_goodsname")
+        .col-md-2
+            .btn.btn-success.btn-block(ng-click="search()") 搜索
+        .col-md-12(ng-grid="grid_options")
+            table.table(ng-show="data.page.total")
+                thead
+                    tr
+                        th.col-md-1 时间
+                        th.col-md-1 订单号 
+                        th.col-md-1 金额  
+                        th.col-md-1 优惠  
+                        th.col-md-1 实付  
+                        th.col-md-1 地址  
+                        th.col-md-1 姓名  
+                        th.col-md-1 电话
+                        th.col-md-1 uid
+                        th.col-md-1 支付方式  
+                        th.col-md-2 备注  
+                tbody(ng-repeat="order in data.page.data" ng-class="{'bg-success':!order.pay_type}")
+                    tr
+                        td {{order|orderTime}}
+                        td {{order.sn}}
+                        td {{order.goods_amount}}
+                        td {{order.discount}}
+                        td {{(order.goods_amount - order.discount)|currency:"￥"}}
+                        td {{order|orderAddress}}
+                        td {{order.address.name}}
+                        td {{order.address.phone}}
+                        td {{order.buyer_id}}
+                        td {{['在线支付','货到付款'][order.pay_type]}}
+                            br
+                            span {{order|orderStatus}}
+                        td.input-group
+                            input.form-control(type="text" ng-model="order.seller_note")
+                            .input-group-btn
+                                button.btn.btn-default(ng-click="note(order)") 更新
+            pagination.pagination-sm(max-size="20" ng-change="search(data.page.current_page, status)" ng-if="data.page.total" ng-show="data.page.total > data.page.per_page" total-items="data.page.total" ng-model="data.page.current_page" items-per-page="data.page.per_page"  previous-text="上一页" next-text="下一页" first-text="<" last-text=">")
+            

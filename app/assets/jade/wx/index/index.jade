@@ -1,0 +1,30 @@
+.index.content
+    .full_width
+        a.col-xs-4.btn.btn-default(ng-href='/wx/cart')
+            i.icon.iconfont.icon-cart
+            div 购物车
+        a.col-xs-4.btn.btn-default(ng-href='/wx/me')
+            i.icon.iconfont.icon-my
+            div 我
+        a.col-xs-4.btn.btn-default(ng-href='/wx/games/hongbao')
+            i.icon.iconfont.icon-hongbao
+                //- span.hongbao-num {{data.hongbao_num}}
+            div 刷红包
+    hr
+    div(ng-repeat="list in goods_list")
+        legend  {{album_titles[$index].name}}
+        .list-group
+            a.list-group-item.media(ng-repeat="item in list" ng-click="show_goods(item.id)"  ng-if="!(albums[item.album_id].name=='所有商品' && $index>show_num) && item.is_show")
+                .pull-left(ng-show="goods_show[item.id]")
+                    img.media-object(ng-src="{{U.img(item.image,'md')}}" id="{{item.id}}" onload="__onload__(this.id)")
+                .media-body(ng-show="goods_show[item.id]")
+                    .row
+                        .col-xs-12
+                            .title.media-heading {{item.name}}
+                        .col-xs-12
+                            .text-muted.subtitle.line-through {{item.subtitle.split(';')[0]}}
+                        .col-xs-12
+                            .text-danger.subtitle {{item.subtitle.split(';')[1]}}
+                        .col-xs-12(ng-if="!item.num")
+                            .btn.btn-default 已售罄
+common-modal(modal="")

@@ -1,0 +1,17 @@
+.address.content
+    .title 收货地址
+    .padding_5 
+        a.btn.btn-lg.btn-default.btn-block(ng-href="/wx/setting/location/address") 
+            span(ng-show="cache.address.selects.length") 
+                |{{cache.address.selects[4].name+cache.address.selects[5].name+cache.address.selects[6].name}}
+            span(ng-show="!cache.address.selects.length") 请点击选择你所在的地址
+    input.input-lg.form-control(placeholder='房间号' type="text" ng-model="cache.address.loc_detail")
+    input.input-lg.form-control(placeholder='姓名' type="text" ng-model="cache.address.name")
+    input.input-lg.form-control(placeholder='手机号码' type="text" ng-model="cache.address.phone" ng-class="{'has-error':phone_error}")
+    //- input.input-lg.form-control(placeholder='请输入验证码' ng-show="confirm" type="text" ng-model="cache.address.confirm_code" ng-class="{'has-error':!cache.address.confirm_code}")
+    //- input.input-lg.form-control(placeholder='备注'  type="text" ng-model="cache.address.note")
+
+    //- .title(ng-show="data.addresses.length") 或选择其他地址
+    //- .item(ng-show="data.addresses.length" ng-repeat="item in data.addresses" ng-click="address_eidt()") 收货人：{{item|commonAddress}}
+
+common-navbar(navbar="wx_navbar")

@@ -1,0 +1,8 @@
+.setting.content
+    legend(ng-if="title") {{title}}
+        .subtitle.text-muted {{subtitle}}
+    //- common-option(option="option" ng-show="!selects[5].sid")
+    //- common-option(option="option_room" ng-show="selects[5].sid")
+    common-option(option="option" ng-show="!selects[5].sid")
+    common-option(option="option_building" ng-show="selects[5].sid")
+common-navbar(navbar="wx_navbar")

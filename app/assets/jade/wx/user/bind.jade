@@ -1,0 +1,10 @@
+.bind.section
+    form(role="form" ng-submit="login()")
+        fieldset
+            legend 我们需要以下信息为您配送
+            .form-group
+                input.form-control(type="text" ng-model="tel" placeholder="手机号码")
+            .form-group
+                input.form-control(type="text" ng-model="realname" placeholder="姓名")
+        //- hr
+        button.btn.btn-primary.btn-block 确定

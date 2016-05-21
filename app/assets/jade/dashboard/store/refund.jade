@@ -1,0 +1,29 @@
+.dashboard.refund
+    sidebar(user='data.user' href-base='/dashboard/store')
+    #content-wrapper
+        .col-md-12(ng-grid="grid_options")
+            h2(ng-show="data.page.total==0") 暂无退款申请！
+            br
+            .btn-group.pull-right
+                .btn.btn-default 历史退款
+                .btn.btn-default(ng-click="update()") 更新
+
+            table.table(ng-show="data.page.total")
+                thead
+                    tr
+                        th.col-md-2 订单号
+                        th.col-md-2 时间
+                        th.col-md-2 金额
+                        //- th.col-md-1 实收
+                        th.col-md-2 操作
+                tbody(ng-repeat="order in data.page.data")
+                    tr
+                        td {{order.sn}}
+                        td {{order.created_at}}
+                        td 
+                            strong.text-danger ￥{{order.amount}}
+                        td 
+                            .btn-group
+                                .btn.btn-default.btn-sm(ng-click="post(order,1)") 同意
+                                .btn.btn-default.btn-sm(ng-click="post(order,0)") 拒绝
+            pagination.pagination-sm(ng-change="Update('/dashboard/store/refund-page/'+data.page.current_page)" ng-if="data.page.total" ng-show="data.page.total > data.page.per_page" total-items="data.page.total" ng-model="data.page.current_page" items-per-page="data.page.per_page"  previous-text="上一页" next-text="下一页" first-text="<" last-text=">")

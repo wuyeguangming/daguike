@@ -1,0 +1,15 @@
+.common_media.list-group
+    a.list-group-item.media(ng-repeat="item in media" ng-href="{{item.href}}")
+        .pull-left
+            img.media-object(ng-src="{{item.image}}")
+        .media-body
+            .row
+                .col-xs-8
+                    h5.media-heading.pull-left(ng-class="item.class[0]") {{item.p[0]}}
+                .col-xs-4
+                    .pull-right.text-danger(ng-class="item.class[1]") {{item.p[1]}}
+                .col-xs-8
+                    .pull-left.text-muted(ng-class="item.class[2]") {{item.p[2]}}
+                .col-xs-4
+                    .pull-right(ng-class="item.class[3]") {{item.p[3]}}
+                    

@@ -1,0 +1,63 @@
+.dashboard.settings
+    sidebar(user='data.user' href-base='/dashboard/index')
+    #content-wrapper
+        .col-md-12
+            br
+            form.form-horizontal(ng-submit="settings.submit()"  role="form")
+                .form-group
+                    .col-md-1.control-label 用户名
+                    .col-md-6
+                        p.form-control-static {{data.user.username}}
+                .form-group
+                    .col-md-1.control-label 邮箱
+                    .col-md-6
+                        p.form-control-static {{data.user.email}}
+                //- .form-group
+                //-     label.col-md-1.control-label 性别
+                //-     .col-md-3.btn-group
+                //-         button.col-md-4.btn.btn-default(type="button", ng-model="data.user.gender", btn-radio="'0'") 保密
+                //-         button.col-md-4.btn.btn-default(type="button", ng-model="data.user.gender", btn-radio="'1'") 女
+                //-         button.col-md-4.btn.btn-default(type="button", ng-model="data.user.gender", btn-radio="'2'") 男
+                //- .form-group
+                //-     label.col-md-1.control-label 生日
+                //-     .col-md-3
+                //-         input.form-control(ng-model="data.user.birthday", type="text", datepicker-popup="yyyy/MM/dd", datepicker-options="", is-open="_date_opened",ng-click="_date_opened='true'" ng-required="true" close-text="" show-weeks="false" show-button-bar="false")
+                .form-group
+                    .col-md-1.control-label 地址
+                    .col-md-6
+                        common-location(loc='loc')
+                //- .form-group
+                //-     label.col-md-1.control-label(for="gender") 简介
+                //-     .col-md-10
+                //-         textarea.form-control.col-md-9(name="intro", rows="3", ng-model="data.user.intro")
+                .form-group
+                    .col-md-1
+                    .col-md-6
+                        button.btn.btn-danger(ng-init="settings.btn_info='修改'") {{settings.btn_info}}
+                        .help-block(ng-show="settings.submit_info" ng-repeat="info in settings.submit_info") {{info}}
+
+            //- form.security(ng-submit="security.submit()")
+            //-   table.table
+            //-     tr
+            //-       td.col-md-1
+            //-         p 原密码
+            //-       td
+            //-         .row
+            //-           .col-md-3
+            //-             input.form-control.first(type="password", name="oldpassword", ng-model='security.oldpassword', required)
+            //-     tr
+            //-       td.col-md-1
+            //-         p 新密码
+            //-       td
+            //-         .row
+            //-           .col-md-3
+            //-             input.form-control.first(type="password", name="password", ng-model='security.password', required)
+            //-     tr
+            //-       td.col-md-1
+            //-         p 确认密码
+            //-       td
+            //-         .row
+            //-           .col-md-3
+            //-             input.form-control.first(type="password", name="repassword", ng-model='security.repassword', required)
+
+            //-   button.btn.btn-danger 修改

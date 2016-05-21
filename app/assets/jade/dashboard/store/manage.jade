@@ -1,0 +1,39 @@
+.dashboard.manage
+    sidebar(user='data.user' href-base='/dashboard/store')
+    #content-wrapper
+        .col-md-12(ng-grid="grid_options")
+            //- h2(ng-show="!page.data") 正在获取，请稍等！
+            h2(ng-show="page.total==0") 您的店铺暂无商品，请先发布商品！
+            table.table(ng-show="page.total")
+                thead
+                    tr
+                        th.col-md-1 封面
+                        th.col-md-2 标题
+                        th.col-md-1 价格
+                        th.col-md-1 销量
+                        th.col-md-1 库存
+                        th.col-md-1 发布时间
+                        th.col-md-1 操作
+                tbody
+                    tr(ng-repeat="goods in page.data")
+                        td
+                            a(ng-href="{{'/dashboard/store/publish/'+goods.id}}")
+                                img(ng-src="{{U.img(goods.image,'sm')}}")
+                        td(ng-mousedown="_edit[$index]=true" ng-mouseleave="_edit[$index]=false")
+                            p {{goods.name}}
+                        td
+                            p {{goods.price}}
+                            //- input.form-control(placeholder="（可为空）" type="text" name="serial" ng-model="sku.serial" ng-minlength="SKU_SERIAL_MIN" ng-maxlength="SKU_SERIAL_MAX")
+                        td
+                            p {{goods.sale_num}}
+                            //- input.form-control(required type="number" ng-model="sku.price" min="{{SKU_PRICE_MIN}}" max="{{SKU_PRICE_MAX}}" step="0.01")
+                        td
+                            p {{goods.num}}
+                            //- input.form-control(required type="number" ng-model="sku.num" min="{{SKU_NUM_MIN}}" max="{{SKU_NUM_MAX}}" step="1")
+                        td 
+                            p {{goods.created_at}}
+                        td
+                            .btn-group
+                                //- a.btn.btn-default.glyphicon.glyphicon-edit(ng-href="{{'/dashboard/store/publish/'+goods.id}}")
+                                a.btn.btn-danger.glyphicon.glyphicon-remove(ng-click="del(goods)")
+            pagination.pagination-sm(ng-change="Update('/dashboard/store/manage/'+page.current_page)" ng-if="page.total" ng-show="page.total > page.per_page" total-items="page.total" ng-model="page.current_page" items-per-page="page.per_page"  previous-text="上一页" next-text="下一页" first-text="<" last-text=">")

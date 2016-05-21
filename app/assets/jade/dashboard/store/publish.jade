@@ -1,0 +1,167 @@
+.dashboard.publish
+    sidebar(user='data.user' href-base='/dashboard/store')
+    #content-wrapper
+        br
+        .col-md-12
+            form.form-horizontal(name='publish_form' novalidate role="form")
+                fieldset.form-inner
+                    //- .form-group
+                    //-     .col-md-1.control-label 发布方式
+                    //-     .col-md-7
+                    //-         .btn-group.btn-group-justified
+                    //-             .btn.btn-default(ng-model="publish_type" btn-radio="0") 新商品
+                    //-             .btn.btn-default(ng-model="publish_type" btn-radio="1") 数据包导入
+                    .form-group(ng-show="!publish_type" ng-class="{ 'has-error' : ( publish_form.name.$invalid) && !publish_form.name.$pristine  }")
+                        .col-md-1.control-label 标题
+                        .col-md-7
+                            input.form-control(placeholder="（可为空）" type="text" name="name" ng-model="name" ng-minlength="NAME_MIN" ng-maxlength="NAME_MAX")
+                            .help-block(ng-show="(publish_form.name.$invalid) && !publish_form.name.$pristine") 长度必须在{{NAME_MIN}}~{{NAME_MAX}}之内
+                    .form-group(ng-show="!publish_type" ng-class="{ 'has-error' : ( publish_form.subtitle.$invalid) && !publish_form.subtitle.$pristine  }")
+                        .col-md-1.control-label 副标题
+                        .col-md-7
+                            input.form-control(placeholder="（可为空）" type="text" name="subtitle" ng-model="subtitle" ng-minlength="NAME_MIN" ng-maxlength="NAME_MAX")
+                            .help-block(ng-show="(publish_form.subtitle.$invalid) && !publish_form.subtitle.$pristine") 长度必须在{{NAME_MIN}}~{{NAME_MAX}}之内
+                    .form-group(ng-show="!publish_type")
+                        .col-md-1.control-label 是否上架
+                        .col-md-7
+                            .btn-group-justified
+                                label.btn.btn-default(ng-model="is_show" btn-radio="1") 是
+                                label.btn.btn-default(ng-model="is_show" btn-radio="0") 否
+
+                    //- 新建
+                    .form-group(ng-show="!publish_type")
+                        .col-md-1.control-label 图片
+                        .col-md-7
+                            blockquote.bg-danger(ng-show="!images_preview.length") 请添加
+                            .row(ng-sortable="{animation:0}")
+                                .col-md-2.image_remove(ng-repeat="image in images_preview track by image.order")
+                                    img.img-thumbnail.full_width(ng-src="{{image.src}}")
+                                    .btn.btn-xs.btn-default.full_width(ng-click="image_remove(image)") 删除
+                        .col-md-11.pull-right
+                            .col-md-2.btn.btn-success.glyphicon.glyphicon-plus(ng-file-select='' ng-model="images_add" ng-multiple="true" ng-file-change="imagesSelected($files, $event)" accept="image/png,image/gif,image/jpeg,image/jpg") 添加
+
+                    .form-group(ng-show="!publish_type")
+                        .col-md-1.control-label 规格
+                        .col-md-7
+                            table.table
+                                thead
+                                    tr
+                                        th(width="20%") 名称
+                                        th(width="20%") 编码
+                                        th(width="15%") 价格
+                                        th(width="15%") 库存
+                                        th(width="15%") 体积
+                                        th(width="15%") 操作
+                                tbody
+                                    tr(ng-repeat="sku in skus")
+                                        td 
+                                            input.form-control(placeholder="（可为空）" type="text" ng-model="sku.value" ng-minlength="SKU_NAME_MIN" ng-maxlength="SKU_NAME_MAX")
+                                        td
+                                            input.form-control(placeholder="（可为空）" type="text" ng-model="sku.serial" ng-minlength="SKU_SERIAL_MIN" ng-maxlength="SKU_SERIAL_MAX")
+                                        td
+                                            input.form-control(required type="number" ng-model="sku.price" min="{{SKU_PRICE_MIN}}" max="{{SKU_PRICE_MAX}}" step="0.01")
+                                        td
+                                            input.form-control(required type="number" ng-model="sku.num" min="{{SKU_NUM_MIN}}" max="{{SKU_NUM_MAX}}" step="1")
+                                        td
+                                            //- input.form-control(required type="number" ng-model="sku.volume" min="{{SKU_VOLUEM_MIN}}" max="{{SKU_VOLUEM_MAX}}" step="1")
+                                            select.form-control.input(ng-model="sku.volume" ng-options="volume for volume in SKU_VOLUEM")
+                                        td 
+                                            .btn.btn-default.glyphicon.glyphicon-remove(ng-disabled="skus.length==1" ng-click="skus.remove(sku)")
+                        .col-md-11.pull-right
+                            .col-md-2.btn.btn-success.glyphicon.glyphicon-plus(ng-click="add_sku()") 添加
+                    .form-group
+                        .col-md-1.control-label 选择类目
+                        .col-md-7
+                            blockquote.bg-danger(ng-show="!selected.category.id") 请选择
+                            blockquote.bg-success(ng-show="selected.category.id") 已选类目：{{selected.category.name}}
+                            .pointer(ui-tree='options' data-drag-enabled="false")
+                                ol(ui-tree-nodes='' ng-model='categories')
+                                    li(ng-repeat='item in categories' ui-tree-node='' data-collapsed="true" ng-include='"items_renderer.html"')
+                    .form-group
+                        .col-md-1.control-label 选择专辑
+                        .col-md-7
+                            blockquote.bg-danger(ng-show="!selected.album.id") 请选择
+                            blockquote.bg-success(ng-show="selected.album.id") 已选专辑：{{selected.album.name}}
+                            .pointer(ui-tree='options' data-drag-enabled="false")
+                                ol(ui-tree-nodes='' ng-model='albums')
+                                    li(ng-repeat='item in albums' ui-tree-node='' data-collapsed="true" ng-include='"album.html"')
+                    
+                    .form-group
+                        .col-md-1.control-label 限购数量
+                        .col-md-7
+                            input.form-control(placeholder="限购数量（默认为空则不限购）" type="number" ng-model="buy_limit")
+             
+                    .form-group
+                        .col-md-1.control-label 销售区域
+                        .col-md-7
+                            alert.col-md-3(type="success" ng-repeat="item in selected.sale_map" close="selected.sale_map.remove(item)") {{item}}
+                            alert.col-md-12(type="danger" ng-show="sale_map_alert" close="sale_map_alert=''") {{sale_map_alert}}
+                            input.form-control(placeholder="请输入省、市、地区或小区名称（默认为空则全网销售）" typeahead-on-select="sale_map_sel($item)" type="text" ng-model="selected.sale_map_item" typeahead="item for item in sale_map | filter:$viewValue | limitTo:8")
+
+                    .form-group
+                        .col-md-1.control-label 上架时间
+                        .col-md-7
+                            .row
+                                .col-md-4
+                                    input.form-control.input-sm(ng-model="start_time"  min-date="now_time"  is-open="begin_opened" ng-click="begin_opened='true'"  max-date=""  ng-required="true"  type="text"  datepicker-popup="yyyy/MM/dd"  datepicker-options="" show-weeks="false"  show-button-bar="false")
+                                .col-md-4
+                                    select.form-control.input-sm(ng-model="start_hour" ng-options="hour for hour in HOURS")
+                                .col-md-4
+                                    select.form-control.input-sm(ng-model="start_min" ng-options="min for min in MINS")                        
+                    .form-group
+                        .col-md-1.control-label 下架时间
+                        .col-md-7
+                            .row
+                                .col-md-4
+                                    input.form-control.input-sm(ng-model="end_time"  min-date="start_time"  is-open="end_opened" ng-click="end_opened='true'"  max-date=""  ng-required="true"  type="text"  datepicker-popup="yyyy/MM/dd"  datepicker-options="" show-weeks="false"  show-button-bar="false")
+                                .col-md-4
+                                    select.form-control.input-sm(ng-model="end_hour" ng-options="hour for hour in HOURS")
+                                .col-md-4
+                                    select.form-control.input-sm(ng-model="end_min" ng-options="min for min in MINS")                        
+
+                    //- 导入
+                    .form-group(ng-show="publish_type")
+                        .col-md-1.control-label 上传数据包
+                        .col-md-7
+                            button.btn.btn-default.full_width(ng-file-select='' ng-model="files" ng-multiple="false" ng-file-change="filesSelected($files, $event)" accept=".csv") {{files_upload_show}}
+                            .help-block.has-success 导入程序默认从第二行执行导入，请保留CSV文件第一行的标题行，最大2M
+                    .form-group(ng-show="publish_type")
+                        .col-md-1.control-label 上传图片
+                        .col-md-7
+                            button.btn.btn-default.full_width(ng-file-select='' ng-model="images_add" ng-multiple="true" ng-file-change="imagesSelected($files, $event)" accept=".tbi") {{images_upload_show}}
+                            .help-block.has-success 请上传与csv文件同级的images目录(或与csv文件同名的目录)内的tbi文件
+                    .form-actions.form-group
+                        .col-md-1
+                        .col-md-7
+                            button.btn.btn-danger.full_width(ng-click="submit()" ng-disabled="!(valid_import() || valid_new())"  ng-init="btn_info='提交'") {{btn_info}}
+
+script(type="text/ng-template" id="items_renderer.html")
+    div(ui-tree-handle='' ng-click="this.$modelValue.items.length ? toggle(this) : (selected.category=this.$modelValue)" ng-class="{selected:(selected.category.id == this.$modelValue.id)}")
+        a.btn.btn-default.btn-xs(ng-show="this.$modelValue.items.length")
+            span(ng-class='{"glyphicon glyphicon-chevron-right": collapsed, "glyphicon glyphicon-chevron-down": !collapsed}')
+        | {{item.name}}
+        span.glyphicon.glyphicon-ok.pull-right(ng-show="(!this.$modelValue.items.length) && (selected.category.id == this.$modelValue.id)")
+
+    ol(ui-tree-nodes='options' ng-model='item.items' ng-class='{hidden: collapsed}')
+        li(ng-repeat='item in item.items' ui-tree-node='' data-collapsed="true"  ng-include='"items_renderer.html"')
+
+
+script(type="text/ng-template" id="album.html")
+    div(ui-tree-handle='' ng-click="this.$modelValue.items.length ? toggle(this) : (selected.album=this.$modelValue)" ng-class="{selected:(selected.album.id == this.$modelValue.id)}")
+        a.btn.btn-default.btn-xs(ng-show="this.$modelValue.items.length")
+            span(ng-class='{"glyphicon glyphicon-chevron-right": collapsed, "glyphicon glyphicon-chevron-down": !collapsed}')
+        | {{item.name}}
+        span.glyphicon.glyphicon-ok.pull-right(ng-show="(!this.$modelValue.items.length) && (selected.album.id == this.$modelValue.id)")
+
+    ol(ui-tree-nodes='options' ng-model='item.items' ng-class='{hidden: collapsed}')
+        li(ng-repeat='item in item.items' ui-tree-node='' data-collapsed="true"  ng-include='"album.html"')
+
+//- script(type="text/ng-template" id="album.html")
+//-     div(ui-tree-handle='' ng-click="toggle(this);(selected.album=this.$modelValue)" ng-class="{selected:(selected.album.id == this.$modelValue.id)}")
+//-         a.btn.btn-default.btn-xs(ng-show="this.$modelValue.items.length")
+//-             span(ng-class='{"glyphicon glyphicon-chevron-right": collapsed, "glyphicon glyphicon-chevron-down": !collapsed}')
+//-         | {{item.name}}
+//-         span.glyphicon.glyphicon-ok.pull-right(ng-show="selected.album.id == this.$modelValue.id")
+
+//-     ol(ui-tree-nodes='options' ng-model='item.items' ng-class='{hidden: collapsed}')
+//-         li(ng-repeat='item in item.items' ui-tree-node='' data-collapsed="true"  ng-include="'album.html'")

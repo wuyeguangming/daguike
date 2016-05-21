@@ -1,0 +1,92 @@
+.index
+    .login(ng-show='!login.email_confirm')
+        h1 登录
+        .container
+            .col-md-12
+                form.form-horizontal.user-container(name='login_form' novalidate  ng-submit="login.submit()" role="form")
+                    fieldset.form-inner
+                        .form-group.icon-container(ng-class="{ 'has-error' : login_form.username.$invalid && !login_form.username.$pristine }")
+                            p.col-sm-3.control-label 用户名或邮箱
+                            .col-sm-9
+                                .fa.fa-user
+                                input.form-control(required placeholder="请输入正确的用户名或注册邮箱" type="text" name="name" ng-model="login.username")
+                        .form-group.icon-container(ng-class="{ 'has-error' : login_form.password.$invalid && !login_form.password.$pristine }")
+                            p.col-sm-3.control-label 密码
+                            .col-sm-9
+                                .fa.fa-lock
+                                input.form-control(required placeholder="请输入密码" type="password" name="password" ng-model="login.password")
+                        .form-actions.form-group.icon-container.has-error
+                            .col-sm-3
+                            .col-sm-9
+                                button.btn.btn-danger.full_width(type='submit' ng-disabled="!(login.username && login.password)" ng-init="login.btn_info='登录'") {{login.btn_info}}
+                                .help-block(ng-show="login.submit_errors" ng-repeat="error in login.submit_errors") {{error}}
+                                br
+                        .form-group.icon-container
+                            .col-md-3
+                            .col-md-9
+                                .row
+                                    .col-md-6
+                                        a.btn.btn-default.btn-sm.full_width(ng-href='/user/create') 注册
+                                    .col-md-6
+                                        a.btn.btn-default.btn-sm.full_width(ng-href='/user/forgot') 忘记密码
+        //- span.others
+        //-     a.btn(ng-click="win_quit()") 退出
+        //-     a.btn(ng-click="setAction('findpwd')") 找回密码
+        //-     a.btn(ng-click="setAction('register')") 注册
+
+//- .user
+//-     .login
+//-         .container
+//-             h1 大贵客
+//-             form.form-horizontal.user-container(name='loginForm' ng-submit="login.submit()")
+//-                 input.form-control.first(type="text" ng-model="member.username" placeholder="用户名" required autofocus)
+//-                 input.form-control.last(type="password" ng-model="member.password" placeholder="密码" required)
+//-                 input.form-control(ng-model="member.remember" placeholder="记住我" required)
+//-                 input.btn.btn-lg.btn-primary.btn-block(type="submit" value="登录")
+
+
+//- <form class="" method="POST" action="{{ URL::to('user/login') }}" accept-charset="UTF-8">
+//-     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+//-     <fieldset>
+//-         <div class="form-group">
+//-             <label class="col-md-2 control-label" for="email">{{ Lang::get('confide::confide.username_e_mail') }}</label>
+//-             <div class="col-md-10">
+//-                 <input class="form-control" tabindex="1" placeholder="{{ Lang::get('confide::confide.username_e_mail') }}" type="text" name="email" id="email" value="{{ Input::old('email') }}">
+//-             </div>
+//-         </div>
+//-         <div class="form-group">
+//-             <label class="col-md-2 control-label" for="password">
+//-                 {{ Lang::get('confide::confide.password') }}
+//-             </label>
+//-             <div class="col-md-10">
+//-                 <input class="form-control" tabindex="2" placeholder="{{ Lang::get('confide::confide.password') }}" type="password" name="password" id="password">
+//-             </div>
+//-         </div>
+
+//-         <div class="form-group">
+//-             <div class="col-md-offset-2 col-md-10">
+//-                 <div class="checkbox">
+//-                     <label for="remember">{{ Lang::get('confide::confide.login.remember') }}
+//-                         <input type="hidden" name="remember" value="0">
+//-                         <input tabindex="4" type="checkbox" name="remember" id="remember" value="1">
+//-                     </label>
+//-                 </div>
+//-             </div>
+//-         </div>
+
+//-         @if ( Session::get('error') )
+//-         <div class="alert alert-danger">{{ Session::get('error') }}</div>
+//-         @endif
+
+//-         @if ( Session::get('notice') )
+//-         <div class="alert">{{ Session::get('notice') }}</div>
+//-         @endif
+
+//-         <div class="form-group">
+//-             <div class="col-md-offset-2 col-md-10">
+//-                 <button tabindex="3" type="submit" class="btn btn-primary">{{ Lang::get('confide::confide.login.submit') }}</button>
+//-                 <a class="btn btn-default" href="forgot">{{ Lang::get('confide::confide.login.forgot_password') }}</a>
+//-             </div>
+//-         </div>
+//-     </fieldset>
+//- </form>

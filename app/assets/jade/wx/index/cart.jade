@@ -1,0 +1,71 @@
+.cart.content(ng-show="ready && _controller!='cartDeliveryTime'")
+    h4.empty(ng-if="!wx_cart.cache.items.length") 购物车还是空的，赶快行动吧！
+        .iconfont.icon-cart
+    .btn.btn-lg.full_width(ng-click="wx_cart.cart_reset()" ng-show="wx_cart.cache.items.length")
+        .pull-left
+            | 购物车
+            i.icon.iconfont.click_hover.font_18.icon-delete
+    .full_width(ng-if="wx_cart.cache.goods_amount>0")
+        p.text-danger(ng-if="wx_cart.cache.goods_amount==wx_cart.cache.amount") 合计：{{wx_cart.cache.amount | currency:""}}元
+        p.text-danger(ng-if="wx_cart.cache.goods_amount!=wx_cart.cache.amount") 合计：{{wx_cart.cache.goods_amount| currency:""}}元&nbsp-&nbsp{{wx_cart.discount | currency:""}}元&nbsp=&nbsp{{wx_cart.cache.amount | currency:""}}元
+    .list-group(ng-repeat="item in wx_cart.cache.items track by $index")
+        .list-group-item.media
+            .pull-left
+                a(ng-href="{{U.goods(item.goods.id)}}")
+                    img.media-object(ng-src="{{U.img(item.goods.image,'sm')}}")
+            .media-body
+                .row
+                    .col-xs-8
+                        h5.media-heading.pull-left {{item.goods.name}}
+                    .col-xs-4
+                        .pull-right.text-danger {{item.sku_selected.price | currency:"￥"}}
+                    .col-xs-8
+                        .text-muted.pull-left {{item.sku_selected.value}}
+                    .col-xs-4
+                        .pull-right X{{item.num}}
+                    .col-xs-12
+                        .text-danger {{wx_cart.errors[$index]|cartError}}
+                    .col-xs-12
+                        .text-warning {{item|cartLimit}}
+                    .col-xs-12
+                        .row
+                            .col-xs-6.btn.btn-default.btn-xs.cart_num(ng-click="wx_cart.sku_minus(item,$index)") -
+                            .col-xs-6.btn.btn-default.btn-xs.cart_num(ng-click="wx_cart.sku_plus(item,$index)") +
+ 
+    //- .col-xs-12.text-danger(ng-show="wx_cart.pay_type==0") 亲，红包只能在线支付下使用哦~
+    //- .full_width.btn-group-justified(ng-show="wx_cart.cache.items.length && data.hongbao_num")
+    //-     a.btn.btn-lg.btn-default.hongbao(ng-href="/wx/hongbao" ng-class="{'btn-red':wx_cart.hongbao.id}") 
+    //-         span.pull-left {{wx_cart.hongbao|cartHongbao}}
+    //-         span.iconfont.icon-right.pull-right
+
+    .item(ng-show="wx_cart.cache.items.length && data.hongbao_num" ng-click="Goto('/wx/hongbao')")
+        span.iconfont.icon-right
+        span {{wx_cart.hongbao|cartHongbao}}
+
+    //- .item(ng-show="wx_cart.cache.items.length" ng-click="delivery_time_eidt()") 配送时间：{{wx_cart.delivery_time|commonDeliveryTime}}
+    .item(ng-show="wx_cart.cache.items.length" ng-click="delivery_time_eidt()") 
+        span.iconfont.icon-right
+        span 配送时间：{{wx_cart.delivery_time|commonDeliveryTime}}(点击预约)
+        span.btn.btn-danger.btn-xs(ng-if="has_book") 订单中包含预约商品
+
+    .item(ng-show="data.wx_addresses.length && $index==0 && wx_cart.cache.items.length" ng-repeat="item in data.wx_addresses" ng-click="address_eidt()") 
+        span.iconfont.icon-right
+        span 地址：{{item|commonAddress}}
+
+    .item.important(ng-show="!data.wx_addresses.length && wx_cart.cache.items.length" ng-click="Goto('/wx/address')")
+        span.iconfont.icon-right
+        span 请添加收货人
+
+    .full_width.btn-group-justified(ng-show="wx_cart.cache.items.length")
+        .btn.btn-lg(ng-click="wx_cart.pay_type=1" ng-class="['unselected','selected'][wx_cart.pay_type]") 
+            span.iconfont.icon-right(ng-show="wx_cart.pay_type")
+            span 货到付款
+        .btn.btn-lg(ng-click="wx_cart.pay_type=0" ng-class="['selected','unselected'][wx_cart.pay_type]") 
+            span.iconfont.icon-right(ng-show="!wx_cart.pay_type")
+            span 微信支付
+
+    //- .col-xs-12.text-danger(ng-show="wx_cart.pay_type==1 && wx_cart.cache.items.length") 亲，货到付款可用支付宝，或自备零钱哦~
+
+.cart.content(ng-if="_controller=='cartDeliveryTime'")
+    common-option(option="option")
+common-navbar(navbar="wx_navbar")

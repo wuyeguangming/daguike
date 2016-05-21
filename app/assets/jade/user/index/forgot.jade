@@ -1,0 +1,32 @@
+.index
+    .forgot
+        div(ng-show='!forgot.is_sent')
+            h1 忘记密码
+            .container
+                .col-md-12
+                    form.form-horizontal.user-container(name='forgot_form' novalidate  ng-submit="forgot.submit()" role="form")
+                        fieldset.form-inner
+                            .form-group.icon-container(ng-class="{ 'has-error' : forgot_form.email.$invalid && !forgot_form.email.$pristine }")
+                                p.col-sm-3.control-label 邮箱
+                                .col-sm-9
+                                    .fa.fa-envelope
+                                    input.form-control(required placeholder="请输入您注册的邮箱" type="email" name="email" ng-model="forgot.email" ng-maxlength="30")
+                                    .help-block(ng-show="forgot_form.email.$invalid && !forgot_form.email.$pristine") 邮箱格式不正确
+
+                            .form-actions.form-group.icon-container.has-error
+                                .col-sm-3
+                                .col-sm-9
+                                    button.btn.btn-danger.full_width(type='submit' ng-disabled="forgot_form.email.$invalid" ng-init="forgot.btn_info='找回密码'") {{forgot.btn_info}}
+                                    .help-block(ng-show="forgot.submit_errors" ng-repeat="error in forgot.submit_errors") {{error}}
+                                    br
+                            .form-group.icon-container
+                                .col-md-3
+                                .col-md-9
+                                    .row
+                                        .col-md-6
+                                            a.btn.btn-default.btn-sm.full_width(ng-href='/user/login') 登录
+                                        .col-md-6
+                                            a.btn.btn-default.btn-sm.full_width(ng-href='/user/create') 注册
+        div(ng-show='forgot.is_sent') 
+            center
+                h3 密码重置的连接已经发送到{{forgot.email}}，请点击链接后重置密码！

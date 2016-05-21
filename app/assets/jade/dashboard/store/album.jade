@@ -1,0 +1,33 @@
+.dashboard.album
+    sidebar(user='data.user' href-base='/dashboard/store')
+    #content-wrapper
+        .col-md-12
+            br
+            form.form-horizontal(role="form")
+                fieldset.form-inner
+                    .form-actions.form-group
+                        .col-sm-12
+                            .btn.btn-success.pull-left.glyphicon.glyphicon-ok(ng-click='save()' ng-init="btn_info='保存'") {{btn_info}}
+                            .btn.btn-default.pull-right.glyphicon.glyphicon-chevron-up(ng-click='collapse(collapse_or_expand=!collapse_or_expand)' ng-show='!collapse_or_expand') 全部折叠
+                            .btn.btn-default.pull-right.glyphicon.glyphicon-chevron-down(ng-click='expand(collapse_or_expand=!collapse_or_expand)' ng-show='collapse_or_expand') 全部展开
+                            .btn.btn-default.pull-right.glyphicon.glyphicon-plus(ng-click='addGroup()') 添加专辑
+
+                    #tree-root(ui-tree='options' data-drag-enabled="true" data-max-depth="2" data-drag-delay="500")
+                        ol(ui-tree-nodes='' ng-model='albums')
+                            li(ng-repeat='item in albums' ui-tree-node='' ng-include='"items_renderer.html"')
+
+
+script(type="text/ng-template" id="items_renderer.html")
+    div(ui-tree-handle='')
+        a.btn.btn-default.btn-xs(data-nodrag='' ng-click='toggle(this)')
+            span.glyphicon(ng-class='{"glyphicon-chevron-right": collapsed, "glyphicon-chevron-down": !collapsed}')
+        | {{item.title}}
+        a.pull-right.btn.btn-danger.btn-xs(data-nodrag='' ng-click='del(this)')
+            span.glyphicon.glyphicon-remove
+        a.pull-right.btn.btn-default.btn-xs(data-nodrag='' ng-click='addSubItem(this)')
+            span.glyphicon.glyphicon-plus
+        a.pull-right.btn.btn-default.btn-xs(data-nodrag='' ng-click='edit(this)')
+            span.glyphicon.glyphicon-edit
+
+    ol(ui-tree-nodes='options' ng-model='item.items' ng-class='{hidden: collapsed}')
+        li(ng-repeat='item in item.items' ui-tree-node=''  ng-include='"items_renderer.html"')

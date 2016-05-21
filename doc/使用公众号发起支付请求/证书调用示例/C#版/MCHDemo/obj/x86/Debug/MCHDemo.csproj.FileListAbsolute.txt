@@ -1,0 +1,10 @@
+D:\工作\代码\MCHDemo\MCHDemo\bin\Debug\MCHDemo.exe.config
+D:\工作\代码\MCHDemo\MCHDemo\bin\Debug\MCHDemo.exe
+D:\工作\代码\MCHDemo\MCHDemo\bin\Debug\MCHDemo.pdb
+D:\工作\代码\MCHDemo\MCHDemo\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\工作\代码\MCHDemo\MCHDemo\obj\x86\Debug\MCHDemo.Form1.resources
+D:\工作\代码\MCHDemo\MCHDemo\obj\x86\Debug\MCHDemo.Properties.Resources.resources
+D:\工作\代码\MCHDemo\MCHDemo\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\工作\代码\MCHDemo\MCHDemo\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\工作\代码\MCHDemo\MCHDemo\obj\x86\Debug\MCHDemo.exe
+D:\工作\代码\MCHDemo\MCHDemo\obj\x86\Debug\MCHDemo.pdb

@@ -1,0 +1,31 @@
+.order.content(ng-if="_controller=='orderDetail' && wx_navbar.ready")
+    //- legend 订单详情
+    legend(ng-class="['text-default','text-danger','text-success'][data.order.status]") {{data.order|orderStatus}}
+    .list-group(ng-show="data.order.id")
+        //- p 订单状态：
+        //-     strong(ng-class="['text-danger','text-success'][data.order.status]") {{data.order|orderStatus}}
+        p 实付金额：
+            strong.text-danger(ng-show="data.order.amount") {{data.order.amount+'元'}}
+        p 订单总计：{{data.order.goods_amount+'元'}}
+        p(ng-if="data.order.hongbao") 红包优惠：{{data.order.hongbao.amount+'元'}}
+        p 支付方式：{{['微信支付','货到付款'][data.order.pay_type]}}
+        p 订单编号：{{data.order.sn}}
+        p 配送时间：{{data.order.delivery_time}}
+        p 配送信息：{{data|commonAddress}}
+    hr
+    common-media(media="order_goods")
+.order.content(ng-if="_controller=='orderIndex' && wx_navbar.ready")
+    h4.empty(ng-if="!index.order.length") 暂无订单
+        .iconfont.icon-cart
+    legend(ng-if="index.order.length") {{index.title}}
+        span.btn.btn-default.btn-lg.pull-right.btn-sm(ng-click="index.scan()" ng-show="index.order.length") 扫一扫
+        //- span.btn.btn-sm.pull-right(ng-if="span" ng-click="span.click()" ng-class="span.class") 全选
+    .list-group(ng-repeat="order in index.order" ng-click="index.click(order,$index)" ng-class="index.class(order,$index)")
+        p {{order.sn}}
+            span.pull-right {{order.created_at}}
+        p {{order|orderAddress}}/{{order.address.name}}/{{order.address.phone}}
+        common-media(media="order.order_goods")
+        p(ng-class="{'false':'text-danger','true':'text-success'}[order.status!=5]") {{order|orderStatus}}{{['','/货到付款  '][order.pay_type]}}
+            span.pull-right.text-danger {{order|orderAmount}}
+        hr
+common-navbar(navbar="wx_navbar" ng-show="wx_navbar.ready")

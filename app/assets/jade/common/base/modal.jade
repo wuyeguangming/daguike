@@ -1,0 +1,28 @@
+.modal-body(ng-show="type=='prompt'")
+    form(name='modal_form' novalidate role="form")
+        fieldset.form-inner
+            .col-md-12
+                h4.text-center {{title}}
+            .form-group.col-sm-12(ng-class="{ 'has-error' : !rule() && !modal_form.model.$pristine}")
+                input.form-control(required name="model" ng-model="model")
+                .help-block(ng-show="!rule() && !modal_form.model.$pristine") {{title_rule}}
+            .form-actions.form-group.col-sm-12
+                .row
+                    .col-sm-6
+                        button.btn.btn-danger.full_width(ng-click="ok()" ng-disabled='!rule() && !modal_form.model.$pristine') 确定
+                    .col-sm-6
+                        button.btn.btn-default.full_width(ng-click="cancel()") 取消
+.modal-body(ng-show="type=='alert'")
+    .col-md-12
+        h4.text-center {{title}}
+    .row
+        .col-md-12
+            .btn.btn-success.full_width(ng-click="cancel()") 知道了
+.modal-body(ng-show="type=='confirm'")
+    .col-md-12
+        h4.text-center {{title}}
+    .row
+        .col-md-6
+            .btn.btn-danger.full_width(ng-click="ok()") 确定
+        .col-md-6
+            .btn.btn-default.full_width(ng-click="cancel()") 取消

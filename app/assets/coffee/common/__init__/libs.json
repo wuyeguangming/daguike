@@ -1,0 +1,16 @@
+{
+    "path":[
+        "jquery/dist/jquery.js",
+        "jquery.scrollTo/jquery.scrollTo.js",
+        "underscore/underscore.js",
+        "angular/angular.js",
+        "angular-i18n/angular-locale_zh-cn.js",
+        "angular-resource/angular-resource.js",
+        "angular-cookies/angular-cookies.js",
+        "angular-mocks/angular-mocks.js",
+        "angular-route/angular-route.js",
+        "angular-animate/angular-animate.js",
+        "angular-bootstrap/ui-bootstrap-tpls.js",
+        "angular-loading-bar/build/loading-bar.js"
+    ]
+}

@@ -1,0 +1,26 @@
+.publish{
+    blockquote{
+        border-left: 0px !important;
+    }
+    .image_remove {
+        img:hover{
+            // background: #FA6469;
+        }
+        .btn-default {
+            color: transparent;
+            background-color: transparent;
+            border-color: transparent;
+        }
+        &:hover{
+            .btn-default {
+                background-color: #FA4E4E;
+                border-color: #ccc;
+                color: rgb(240, 225, 225);
+            }
+        }
+        margin-bottom: 15px;
+    }
+    th {
+        font-weight: normal !important;
+    }
+}

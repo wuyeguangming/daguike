@@ -1,0 +1,14 @@
+.me.content
+    .list-group
+        a.list-group-item(ng-href="/wx/setting/hongbao")
+            .btn.btn-lg.btn-deafult 我的红包
+        a.list-group-item(ng-href="/wx/order")
+            .btn.btn-lg.btn-deafult 订单管理
+        a.list-group-item(ng-href="/wx/setting/location")
+            .btn.btn-lg.btn-deafult 地址设置
+        a.list-group-item(ng-href="/wx/me/about")
+            .btn.btn-lg.btn-deafult 联系方式
+        a.list-group-item(ng-href="/wx/me/dashboard" ng-if="data.user.store_id")
+            .btn.btn-lg.btn-deafult 店铺管理
+            
+common-navbar(navbar="wx_navbar")

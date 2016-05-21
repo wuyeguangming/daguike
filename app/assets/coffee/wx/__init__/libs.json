@@ -1,0 +1,7 @@
+{
+    "path":[
+        "daguike_sdk/wx/jweixin-1.0.0.js",
+        "angular/angular.min.js",
+        "angular-route/angular-route.min.js"
+    ]
+}

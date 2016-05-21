@@ -1,0 +1,11 @@
+{
+    "path":[
+        "ng-file-upload/angular-file-upload.js",
+        "angular-ui-tree/dist/angular-ui-tree.min.js",
+        "Sortable/Sortable.min.js",
+        "Sortable/ng-sortable.js",
+        "xdate/src/xdate.js",
+        "jQuery.print/jQuery.print.js",
+        "jquery.qrcode/dist/jquery.qrcode.min.js"
+    ]
+}

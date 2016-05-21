@@ -1,0 +1,43 @@
+.dashboard.index
+    sidebar(user='data.user'  href-base='/dashboard/index')
+    #content-wrapper
+        .col-md-12
+            br
+            h1 你好，大贵客！
+
+
+
+//- .user
+//-     .index
+//-         h1 我的大贵客
+//-         form.form-horizontal.user-container(name='index_form' novalidate  ng-submit="index.submit()" role="form")
+//-             fieldset.form-inner
+//-                 .form-group.icon-container
+//-                     label.col-sm-3.control-label 用户名
+//-                     .col-sm-9
+//-                         .fa {{index.data.user.username}}
+//-                 .form-group.icon-container
+//-                     label.col-sm-3.control-label 邮箱
+//-                     .col-sm-9
+//-                         .fa {{index.data.user.email}}
+//-                 .form-group.icon-container(ng-class="{ 'has-error' : (invalid_password() || index_form.password.$invalid) && !index_form.password.$pristine }")
+//-                     label.col-sm-3.control-label 密码
+//-                     .col-sm-9
+//-                         .fa.fa-lock
+//-                         input.form-control(required placeholder="{{PASSWORD_MIN}}~{{PASSWORD_MAX}}位字母或数字且不能全为数字或字母" type="password" name="password" ng-model="index.password" ng-minlength="6" ng-maxlength="12")
+//-                         .help-block(ng-show="(invalid_password() || index_form.password.$invalid) && !index_form.password.$pristine") {{PASSWORD_MIN}}~{{PASSWORD_MAX}}位字母或数字且不能全为数字或字母
+//-                 .form-group.icon-container(ng-class="{ 'has-error' : (index.password != index.password_confirmation) && !index_form.password_confirmation.$pristine }")
+//-                     label.col-sm-3.control-label 确认密码
+//-                     .col-sm-9
+//-                         .fa.fa-lock
+//-                         input.form-control(required placeholder="确认密码" type="password" name="password_confirmation" ng-model="index.password_confirmation" ng-minlength="6" ng-maxlength="12")
+//-                         .help-block(ng-show="(index.password != index.password_confirmation) && !index_form.password_confirmation.$pristine") 两次密码不同
+//-                 .form-group.icon-container
+//-                     label.col-sm-3.control-label 所在地
+//-                     .col-sm-9
+//-                         common-location(loc='loc')
+//-                 .form-actions.form-group.icon-container.has-error
+//-                     .col-sm-3
+//-                     .col-sm-9
+//-                         button.btn.btn-danger.full_width(type='submit' ng-disabled='index_form.email.$invalid || index_form.password.$invalid || index_form.password_confirmation.$invalid || (index.password != index.password_confirmation)' ng-init="index.btn_info='更新'") {{index.btn_info}}
+//-                         .help-block(ng-show="index.submit_errors" ng-repeat="error in index.submit_errors") {{error}}

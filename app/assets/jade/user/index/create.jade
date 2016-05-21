@@ -1,0 +1,52 @@
+.index
+    .create(ng-show='!create.email_confirm')
+        h1 注册
+        .container
+            .col-md-12
+                form.form-horizontal.user-container(name='create_form' novalidate  ng-submit="create.submit()" role="form")
+                    fieldset.form-inner
+                        .form-group.icon-container(ng-class="{ 'has-error' : (invalid_username() || create_form.username.$invalid) && !create_form.username.$pristine }")
+                            p.col-sm-3.control-label 用户名
+                            .col-sm-9
+                                .fa.fa-user
+                                input.form-control(required placeholder="{{USER_MIN}}~{{USER_MAX}}位字母或数字且不能全为数字或字母" type="text" name="username" ng-model="create.username" ng-minlength="USER_MIN" ng-maxlength="USER_MAX")
+                                .help-block(ng-show="(invalid_username() ||create_form.username.$error.minlength || create_form.username.$error.maxlength) && !create_form.username.$pristine") {{USER_MIN}}~{{USER_MAX}}位字母或数字且不能全为数字或字母
+                        .form-group.icon-container(ng-class="{ 'has-error' : create_form.email.$invalid && !create_form.email.$pristine }")
+                            p.col-sm-3.control-label 邮箱
+                            .col-sm-9
+                                .fa.fa-envelope
+                                input.form-control(required placeholder="邮箱" type="email" name="email" ng-model="create.email" ng-maxlength="40")
+                                .help-block(ng-show="create_form.email.$invalid && !create_form.email.$pristine") 邮箱格式不正确
+                        .form-group.icon-container(ng-class="{ 'has-error' : (invalid_password() || create_form.password.$invalid) && !create_form.password.$pristine }")
+                            p.col-sm-3.control-label 密码
+                            .col-sm-9
+                                .fa.fa-lock
+                                input.form-control(required placeholder="{{PASSWORD_MIN}}~{{PASSWORD_MAX}}位字母或数字且不能全为数字或字母" type="password" name="password" ng-model="create.password" ng-minlength="PASSWORD_MIN" ng-maxlength="PASSWORD_MAX")
+                                .help-block(ng-show="(invalid_password() || create_form.password.$invalid) && !create_form.password.$pristine") {{PASSWORD_MIN}}~{{PASSWORD_MAX}}位字母或数字且不能全为数字或字母
+                        .form-group.icon-container(ng-class="{ 'has-error' : (create.password != create.password_confirmation) && !create_form.password_confirmation.$pristine }")
+                            p.col-sm-3.control-label 确认密码
+                            .col-sm-9
+                                .fa.fa-lock
+                                input.form-control(required placeholder="确认密码" type="password" name="password_confirmation" ng-model="create.password_confirmation" ng-minlength="PASSWORD_MIN" ng-maxlength="PASSWORD_MAX")
+                                .help-block(ng-show="(create.password != create.password_confirmation) && !create_form.password_confirmation.$pristine") 两次密码不同
+                        .form-group.icon-container
+                            p.col-sm-3.control-label 所在地
+                            .col-sm-9
+                                common-location(loc='loc')
+                        .form-actions.form-group.icon-container.has-error
+                            .col-sm-3
+                            .col-sm-9
+                                button.btn.btn-danger.full_width(type='submit' ng-disabled='invalid_username() || invalid_password() || create_form.username.$invalid || create_form.email.$invalid || create_form.password.$invalid || create_form.password_confirmation.$invalid || (create.password != create.password_confirmation)' ng-init="create.btn_info='立即注册'") {{create.btn_info}}
+                                .help-block(ng-show="create.submit_errors" ng-repeat="error in create.submit_errors") {{error}}
+                                br
+                        .form-group.icon-container
+                            .col-sm-3
+                            .col-sm-9
+                                a.btn.btn-default.btn-sm.full_width(ng-href='/user/login') 已有账号登录
+    .create.container(ng-show='create.email_confirm')
+        center
+            h1.glyphicon.glyphicon-ok 已发送验证邮件到{{create.email}}
+            br
+            br
+            h4 请您进入邮箱中点击验证按钮完成注册！
+            a.btn.btn-xs.btn-success(ng-href="/user/login") 我已验证
